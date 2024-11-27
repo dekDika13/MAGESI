@@ -1,9 +1,12 @@
 package main
 
 import (
-	"magesi/database"
-
 	"log"
+	"magesi/database"
+	"magesi/router"
+	"os"
+
+	"github.com/labstack/echo"
 
 	"github.com/joho/godotenv"
 )
@@ -16,4 +19,11 @@ func main() {
 
 	database.InitDB()
 
+	e := echo.New()
+
+	router.New(e, database.DB)
+
+	port := os.Getenv("PORT")
+
+	_ = e.Start(port)
 }
